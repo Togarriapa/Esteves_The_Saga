@@ -1,0 +1,26 @@
+Picture[] P1 = {new Picture(200,200,"animation/character0.png"),
+                new Picture(200,200,"animation/character1.png"),
+                new Picture(200,200,"animation/character2.png"),
+                new Picture(200,200,"animation/character4.png"),
+                new Picture(200,200,"animation/character5.png"),
+                new Picture(200,200,"animation/character6.png"),
+                new Picture(200,200,"animation/character7.png"),
+                new Picture(200,200,"animation/character8.png"),
+                new Picture(200,200,"animation/character4.png"),
+                new Picture(200,200,"animation/character6.png")};
+
+
+
+            //
+            currentPic =P1[0];
+            currentPic.draw();
+            int counter = 0;
+            while(true){
+                counter++;
+                Thread.sleep(350);
+                currentPic.delete();
+                currentPic = P1[counter];
+                currentPic.draw();
+                if(counter == P1.length-1) counter = 0;
+            }
+        */

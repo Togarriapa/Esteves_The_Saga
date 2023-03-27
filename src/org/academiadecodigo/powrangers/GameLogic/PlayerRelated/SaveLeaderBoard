@@ -1,0 +1,60 @@
+public void test(int providedHighscore, String providedName, String filepath) throws IOException {
+        fileReader = new FileReader (filepath);
+        char[] buffer = new char[1024];
+        fileReader.read(buffer);
+        String line = new String(buffer);
+
+        //System.out.println(line);
+
+        String[] allHighScoreArr = line.split(" "); // ARRAY COM PLAYER;HIGHSCORE
+        ArrayList<String> players = new ArrayList<>(); //ARRAY DE 10 SLOTS PARA GUARDAR OS PLAYERS
+        ArrayList<Integer> highScores = new ArrayList<>(); // ARRAY DE 10 SLOTS PARA GUARDAR OS HIGHSCORES
+
+        for (int i = 0; i < 10;i++) {
+            String[] playerAndHighScore= allHighScoreArr[i].split(";"); // ARRAY DE 2 SLOTS COM  INDEX 0 PLAYER INDEX 1 HIGHSCORE
+            //System.out.println(playerAndHighScore[0]);
+            //System.out.println(playerAndHighScore[1]);
+            players.add(i, playerAndHighScore[0]); //guardar a string players no array
+            highScores.add(i,Integer.parseInt(playerAndHighScore[1])); //guardar os int highscore no array
+        }
+        boolean flagNewHighScore = false;
+        for (int i = 0; i < highScores.size(); i++) {
+            if(providedHighscore > highScores.get(i)){
+                flagNewHighScore = true;
+                highScores.add(i,providedHighscore);
+                highScores.remove(highScores.size()-1);
+                players.add(i,providedName);
+                players.remove(highScores.size()-1);
+                break;
+            }
+
+
+        }
+        if(!flagNewHighScore){
+            //LOGICA NAO TEM NOVO HIGHSCORE
+            System.out.println("you are bad at this game");
+            return;
+        }
+        for (int i = 0; i < highScores.size(); i++) {
+            System.out.println(players.get(i));
+            System.out.println(highScores.get(i));
+
+        }
+        StringBuilder updated = new StringBuilder();
+        for (int i = 0; i < players.size(); i++) {
+
+            updated.append(players.get(i)+";");
+            updated.append(highScores.get(i) + " ");
+            if(i ==players.size()-1){
+                updated.append("Holder;999");
+            }
+        }
+        System.out.println(updated);
+        write(updated.toString(),filepath);
+
+    }
+public void write(String updated, String filepath) throws IOException {
+    BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filepath));
+    fileWriter.write(updated);
+    fileWriter.flush();
+}
